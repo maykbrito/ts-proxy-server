@@ -1,10 +1,12 @@
 import { Router } from 'express'
 import { parse, URLSearchParams } from 'url'
+import apicache from 'apicache'
 import axios from 'axios'
 
 const apiRoutes = Router()
+const cache = apicache.middleware
 
-apiRoutes.get('/', async (req, res) => {
+apiRoutes.get('/', cache('1 minute'), async (req, res) => {
   const { API_BASE_URL, API_KEY_NAME, API_KEY_VALUE } = process.env
   try {
     const params = new URLSearchParams({
